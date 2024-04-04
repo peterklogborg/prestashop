@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday/retry'
 require 'mini_magick'
 require 'tempfile'
 
@@ -42,7 +43,7 @@ module Prestashop
           builder.request     :retry, 5
           builder.response    :logger if ENV['DEBUG']
           builder.adapter     :net_http
-          builder.basic_auth  api_key, ''
+          builder.request     :authorization, :basic, api_key, ''
         end
       end
 
